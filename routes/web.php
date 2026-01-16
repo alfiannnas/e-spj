@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\KroController;
 use App\Http\Controllers\RoController;
-
+use App\Http\Controllers\KomponenController;
 
 // Login Routes
 Route::get('/', function () {
@@ -25,5 +25,6 @@ Route::prefix('settings')->group(function () {
     Route::resource('program', ProgramController::class);
     Route::resource('kro', KroController::class);
     Route::resource('ro', RoController::class);
+    Route::resource('komponen', KomponenController::class);
 
 });
