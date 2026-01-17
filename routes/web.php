@@ -25,6 +25,7 @@ Route::resource('dashboard', DashboardController::class);
 // Belanja Redesain Routes
 Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');
 Route::post('belanja-redesain/{belanjaHeader}/store-kro', [BelanjaHeaderController::class, 'storeKro'])->name('belanja-redesain.storeKro');
+Route::post('belanja-redesain/{belanjaHeader}/store-ro', [BelanjaHeaderController::class, 'storeRo'])->name('belanja-redesain.storeRo');
 Route::resource('belanja-redesain', BelanjaHeaderController::class);
 
 // Settings Routes

@@ -25,4 +25,9 @@ class BelanjaHeader extends Model
     {
         return $this->belongsTo(Kro::class, 'kro_id');
     }
+
+    public function ros()
+    {
+        return $this->belongsTo(Ro::class, 'ro_id');
+    }
 }

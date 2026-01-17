@@ -15,8 +15,9 @@ class BelanjaHeaderController extends Controller
         $belanjaHeaders = BelanjaHeader::all();
         $programs = \App\Models\Program::all();
         $kros = \App\Models\Kro::all();
+        $ros = \App\Models\Ro::all();
         // dd($belanjaHeaders);
-        return view('belanja-redesain.index', compact('belanjaHeaders', 'programs', 'kros'));
+        return view('belanja-redesain.index', compact('belanjaHeaders', 'programs', 'kros', 'ros'));
     }
 
     /**
@@ -107,6 +108,31 @@ class BelanjaHeaderController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'KRO berhasil dipilih',
+                'data' => $belanjaHeader
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Store RO for belanja header via AJAX.
+     */
+    public function storeRo(Request $request, BelanjaHeader $belanjaHeader)
+    {
+        $validated = $request->validate([
+            'ro_id' => 'required|exists:ros,id',
+        ]);
+
+        try {
+            $belanjaHeader->update(['ro_id' => $validated['ro_id']]);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'RO berhasil dipilih',
                 'data' => $belanjaHeader
             ]);
         } catch (\Exception $e) {

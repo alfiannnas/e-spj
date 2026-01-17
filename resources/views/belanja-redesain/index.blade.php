@@ -74,20 +74,10 @@
             <!-- Page Content -->
             <div class="flex-1 overflow-auto">
                 <div class="w-full px-8 py-8">
-                    <!-- Tabs -->
-                    <div class="flex gap-2 mb-6">
-                        <button onclick="switchTab('komponen')" id="tab-komponen" class="tab-active px-6 py-2 rounded-t-lg font-medium transition duration-200">
-                            1. Rekam Komponen
-                        </button>
-                        <button onclick="switchTab('sub-komponen')" id="tab-sub-komponen" class="tab-inactive px-6 py-2 rounded-t-lg font-medium transition duration-200">
-                            2. Rekam Sub Komponen
-                        </button>
-                    </div>
-
                     <!-- Total Pagu -->
                     <div class="bg-white p-4 rounded-lg shadow mb-6 flex justify-between items-center">
                         <span class="text-lg font-semibold text-gray-700">Pagu Total :</span>
-                        <span class="text-2xl font-bold text-blue-600">26.452.541.000</span>
+                        <span class="text-2xl font-bold text-blue-600">Rp26.452.541.000</span>
                     </div>
 
                     <!-- Komponen Tab Content -->
@@ -115,7 +105,7 @@
                                         <td class="border border-gray-300 px-4 py-3 text-right font-semibold">{{ number_format($item->jumlah, 0, ',', '.') }}</td>
                                     </tr>
                                     @if($item->kros)
-                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-100 cursor-pointer" onclick="openKroModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
+                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-100 cursor-pointer" onclick="openRoModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
                                         <td class="border border-gray-300 px-4 py-3 font-medium pl-8">{{ $item->programs->kode_kegiatan }}.{{ optional($item->kros)->kode_kro ?? '-' }}</td>
                                         <td class="border border-gray-300 px-4 py-3">{{ optional($item->kros)->nama_kro ?? '-' }}</td>
                                         <td class="border border-gray-300 px-4 py-3 text-center">-</td>
@@ -123,6 +113,16 @@
                                         <td class="border border-gray-300 px-4 py-3 text-center">-</td>
                                         <td class="border border-gray-300 px-4 py-3 text-right font-semibold">-</td>
                                     </tr>
+                                    @if($item->ros)
+                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-50 cursor-pointer" onclick="openRoModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
+                                        <td class="border border-gray-300 px-4 py-3 font-medium pl-12">{{ $item->programs->kode_kegiatan }}.{{ optional($item->kros)->kode_kro ?? '-' }}.{{ optional($item->ros)->kode_ro ?? '-' }}</td>
+                                        <td class="border border-gray-300 px-4 py-3">{{ optional($item->ros)->nama_ro ?? '-' }}</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-right font-semibold">-</td>
+                                    </tr>
+                                    @endif
                                     @endif
                                     @empty
                                     <tr class="hover:bg-gray-50 border-b border-gray-200">
@@ -165,6 +165,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Pilih RO -->
+    <div id="roModal" style="display: none;" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" style="max-height: 90vh; overflow-y: auto;">
+            <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Pilih RO</h3>
+                <button onclick="closeRoModal()" class="text-white hover:bg-blue-700 p-1 rounded">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="roForm" method="POST" onsubmit="submitRo(event)" class="p-6">
+                @csrf
+                <input type="hidden" id="belanja_id_ro" name="belanja_id_ro">
+                <div class="mb-6">
+                    <label for="ro_id" class="block text-sm font-medium text-gray-700 mb-2">RO <span class="text-red-600">*</span></label>
+                    <select id="ro_id" name="ro_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">-- Pilih RO --</option>
+                        @foreach($ros as $ro)
+                        <option value="{{ $ro->id }}">{{ $ro->kode_ro }} - {{ $ro->nama_ro }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeRoModal()" class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        Pilih
+                    </button>
+                </div>
+
+                <div id="roMessage" style="display: none;" class="mt-4 p-3 rounded-lg text-sm"></div>
+            </form>
         </div>
     </div>
 
@@ -251,6 +290,61 @@
     </div>
 
     <script>
+        function openRoModal(belanjaId, kodeKegiatan) {
+            document.getElementById('belanja_id_ro').value = belanjaId;
+            const modal = document.getElementById('roModal');
+            modal.style.display = 'flex';
+        }
+
+        function closeRoModal() {
+            const modal = document.getElementById('roModal');
+            modal.style.display = 'none';
+            document.getElementById('roForm').reset();
+            document.getElementById('roMessage').style.display = 'none';
+        }
+
+        function submitRo(event) {
+            event.preventDefault();
+
+            const belanjaId = document.getElementById('belanja_id_ro').value;
+            const roId = document.getElementById('ro_id').value;
+            const messageDiv = document.getElementById('roMessage');
+
+            // Submit via AJAX
+            fetch('/belanja-redesain/' + belanjaId + '/store-ro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({
+                    ro_id: roId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-green-100 text-green-700';
+                    messageDiv.textContent = '✓ RO berhasil dipilih!';
+                    
+                    setTimeout(() => {
+                        closeRoModal();
+                        location.reload();
+                    }, 1500);
+                } else {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
+                    messageDiv.textContent = '✗ ' + (data.message || 'Gagal memilih RO');
+                }
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
+                messageDiv.textContent = '✗ Error: ' + error.message;
+            });
+        }
+
         function openKroModal(belanjaId, kodeKegiatan) {
             document.getElementById('belanja_id').value = belanjaId;
             const modal = document.getElementById('kroModal');
