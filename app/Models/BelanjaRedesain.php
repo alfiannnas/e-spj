@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class BelanjaRedesain extends Model
+{
+    protected $fillable = [
+        'program_id',
+        'ro_id',
+        'nama_uraian',
+        'satuan',
+        'harga',
+        'jumlah',
+    ];
+
+    public function programs()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
+    }
+}
