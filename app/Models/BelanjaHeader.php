@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BelanjaRedesain extends Model
+class BelanjaHeader extends Model
 {
     protected $fillable = [
         'program_id',

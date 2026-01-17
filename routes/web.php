@@ -8,7 +8,7 @@ use App\Http\Controllers\KroController;
 use App\Http\Controllers\RoController;
 use App\Http\Controllers\KomponenController;
 use App\Http\Controllers\AkunController;
-use App\Http\Controllers\BelanjaRedesainController;
+use App\Http\Controllers\BelanjaHeaderController;
 
 // Login Routes
 Route::get('/', function () {
@@ -23,8 +23,8 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::resource('dashboard', DashboardController::class);
 
 // Belanja Redesain Routes
-Route::resource('belanja-redesain', BelanjaRedesainController::class);
-Route::post('belanja-redesain/storeProgram', [BelanjaRedesainController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');
+Route::resource('belanja-redesain', BelanjaHeaderController::class);
+Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');
 
 // Settings Routes
 Route::prefix('settings')->group(function () {

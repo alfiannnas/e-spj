@@ -105,7 +105,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($belanjaRedesains as $item)
+                                    @forelse($belanjaHeaders as $item)
                                     <tr class="hover:bg-gray-50 border-b border-gray-200">
                                         <td class="border border-gray-300 px-4 py-3 font-medium">{{ optional($item->programs)->kode_kegiatan ?? '-' }}</td>
                                         <td class="border border-gray-300 px-4 py-3">{{ $item->nama_uraian }}</td>

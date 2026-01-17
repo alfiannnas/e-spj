@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BelanjaRedesain;
+use App\Models\BelanjaHeader;
 use Illuminate\Http\Request;
 
-class BelanjaRedesainController extends Controller
+class BelanjaHeaderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $belanjaRedesains = BelanjaRedesain::all();
+        $belanjaHeaders = BelanjaHeader::all();
         $programs = \App\Models\Program::all();
-        // dd($belanjaRedesains);
-        return view('belanja-redesain.index', compact('belanjaRedesains', 'programs'));
+        // dd($belanjaHeaders);
+        return view('belanja-redesain.index', compact('belanjaHeaders', 'programs'));
     }
 
     /**
@@ -37,7 +37,7 @@ class BelanjaRedesainController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BelanjaRedesain $belanjaRedesain)
+    public function show(BelanjaHeader $belanjaHeader)
     {
         //
     }
@@ -45,7 +45,7 @@ class BelanjaRedesainController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BelanjaRedesain $belanjaRedesain)
+    public function edit(BelanjaHeader $belanjaHeader)
     {
         //
     }
@@ -53,7 +53,7 @@ class BelanjaRedesainController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BelanjaRedesain $belanjaRedesain)
+    public function update(Request $request, BelanjaHeader $belanjaHeader)
     {
         //
     }
@@ -61,13 +61,13 @@ class BelanjaRedesainController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BelanjaRedesain $belanjaRedesain)
+    public function destroy(BelanjaHeader $belanjaHeader)
     {
         //
     }
 
     /**
-     * Store belanja redesain data via AJAX.
+     * Store belanja header data via AJAX.
      */
     public function storeProgram(Request $request)
     {
@@ -77,7 +77,7 @@ class BelanjaRedesainController extends Controller
         ]);
 
         try {
-            $belanja = BelanjaRedesain::create($validated);
+            $belanja = BelanjaHeader::create($validated);
             return response()->json([
                 'success' => true,
                 'message' => 'Data belanja berhasil disimpan',
