@@ -14,8 +14,9 @@ class BelanjaHeaderController extends Controller
     {
         $belanjaHeaders = BelanjaHeader::all();
         $programs = \App\Models\Program::all();
+        $kros = \App\Models\Kro::all();
         // dd($belanjaHeaders);
-        return view('belanja-redesain.index', compact('belanjaHeaders', 'programs'));
+        return view('belanja-redesain.index', compact('belanjaHeaders', 'programs', 'kros'));
     }
 
     /**
@@ -82,6 +83,31 @@ class BelanjaHeaderController extends Controller
                 'success' => true,
                 'message' => 'Data belanja berhasil disimpan',
                 'data' => $belanja
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Store KRO for belanja header via AJAX.
+     */
+    public function storeKro(Request $request, BelanjaHeader $belanjaHeader)
+    {
+        $validated = $request->validate([
+            'kro_id' => 'required|exists:kros,id',
+        ]);
+
+        try {
+            $belanjaHeader->update(['kro_id' => $validated['kro_id']]);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'KRO berhasil dipilih',
+                'data' => $belanjaHeader
             ]);
         } catch (\Exception $e) {
             return response()->json([

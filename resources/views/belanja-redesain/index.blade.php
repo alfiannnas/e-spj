@@ -106,7 +106,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse($belanjaHeaders as $item)
-                                    <tr class="hover:bg-gray-50 border-b border-gray-200">
+                                    <tr class="hover:bg-gray-50 border-b border-gray-200 cursor-pointer" onclick="openKroModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
                                         <td class="border border-gray-300 px-4 py-3 font-medium">{{ optional($item->programs)->kode_kegiatan ?? '-' }}</td>
                                         <td class="border border-gray-300 px-4 py-3">{{ $item->nama_uraian }}</td>
                                         <td class="border border-gray-300 px-4 py-3 text-center">-</td>
@@ -114,6 +114,16 @@
                                         <td class="border border-gray-300 px-4 py-3 text-center">{{ number_format($item->harga, 0, ',', '.') }}</td>
                                         <td class="border border-gray-300 px-4 py-3 text-right font-semibold">{{ number_format($item->jumlah, 0, ',', '.') }}</td>
                                     </tr>
+                                    @if($item->kros)
+                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-100 cursor-pointer" onclick="openKroModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
+                                        <td class="border border-gray-300 px-4 py-3 font-medium pl-8">{{ $item->programs->kode_kegiatan }}.{{ optional($item->kros)->kode_kro ?? '-' }}</td>
+                                        <td class="border border-gray-300 px-4 py-3">{{ optional($item->kros)->nama_kro ?? '-' }}</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-right font-semibold">-</td>
+                                    </tr>
+                                    @endif
                                     @empty
                                     <tr class="hover:bg-gray-50 border-b border-gray-200">
                                         <td colspan="6" class="border border-gray-300 px-4 py-3 text-center text-gray-500">Belum ada data</td>
@@ -155,6 +165,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Pilih KRO -->
+    <div id="kroModal" style="display: none;" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" style="max-height: 90vh; overflow-y: auto;">
+            <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Pilih KRO</h3>
+                <button onclick="closeKroModal()" class="text-white hover:bg-blue-700 p-1 rounded">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="kroForm" method="POST" onsubmit="submitKro(event)" class="p-6">
+                @csrf
+                <input type="hidden" id="belanja_id" name="belanja_id">
+                <div class="mb-6">
+                    <label for="kro_id" class="block text-sm font-medium text-gray-700 mb-2">KRO <span class="text-red-600">*</span></label>
+                    <select id="kro_id" name="kro_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">-- Pilih KRO --</option>
+                        @foreach($kros as $kro)
+                        <option value="{{ $kro->id }}">{{ $kro->kode_kro }} - {{ $kro->nama_kro }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeKroModal()" class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        Pilih
+                    </button>
+                </div>
+
+                <div id="kroMessage" style="display: none;" class="mt-4 p-3 rounded-lg text-sm"></div>
+            </form>
         </div>
     </div>
 
@@ -202,6 +251,61 @@
     </div>
 
     <script>
+        function openKroModal(belanjaId, kodeKegiatan) {
+            document.getElementById('belanja_id').value = belanjaId;
+            const modal = document.getElementById('kroModal');
+            modal.style.display = 'flex';
+        }
+
+        function closeKroModal() {
+            const modal = document.getElementById('kroModal');
+            modal.style.display = 'none';
+            document.getElementById('kroForm').reset();
+            document.getElementById('kroMessage').style.display = 'none';
+        }
+
+        function submitKro(event) {
+            event.preventDefault();
+
+            const belanjaId = document.getElementById('belanja_id').value;
+            const kroId = document.getElementById('kro_id').value;
+            const messageDiv = document.getElementById('kroMessage');
+
+            // Submit via AJAX
+            fetch('/belanja-redesain/' + belanjaId + '/store-kro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({
+                    kro_id: kroId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-green-100 text-green-700';
+                    messageDiv.textContent = '✓ KRO berhasil dipilih!';
+                    
+                    setTimeout(() => {
+                        closeKroModal();
+                        location.reload();
+                    }, 1500);
+                } else {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
+                    messageDiv.textContent = '✗ ' + (data.message || 'Gagal memilih KRO');
+                }
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
+                messageDiv.textContent = '✗ Error: ' + error.message;
+            });
+        }
+
         function autofillUraian() {
             const programSelect = document.getElementById('program_id');
             const selectedOption = programSelect.options[programSelect.selectedIndex];

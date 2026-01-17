@@ -23,8 +23,9 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::resource('dashboard', DashboardController::class);
 
 // Belanja Redesain Routes
-Route::resource('belanja-redesain', BelanjaHeaderController::class);
 Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');
+Route::post('belanja-redesain/{belanjaHeader}/store-kro', [BelanjaHeaderController::class, 'storeKro'])->name('belanja-redesain.storeKro');
+Route::resource('belanja-redesain', BelanjaHeaderController::class);
 
 // Settings Routes
 Route::prefix('settings')->group(function () {
