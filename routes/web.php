@@ -27,6 +27,7 @@ Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 's
 Route::post('belanja-redesain/{belanjaHeader}/store-kro', [BelanjaHeaderController::class, 'storeKro'])->name('belanja-redesain.storeKro');
 Route::post('belanja-redesain/{belanjaHeader}/store-ro', [BelanjaHeaderController::class, 'storeRo'])->name('belanja-redesain.storeRo');
 Route::post('belanja-redesain/{belanjaHeader}/store-komponen', [BelanjaHeaderController::class, 'storeKomponen'])->name('belanja-redesain.storeKomponen');
+Route::post('belanja-redesain/{belanjaHeader}/store-subkomponen', [BelanjaHeaderController::class, 'storeSubkomponen'])->name('belanja-redesain.storeSubkomponen');
 Route::resource('belanja-redesain', BelanjaHeaderController::class);
 
 // Settings Routes

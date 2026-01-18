@@ -17,7 +17,6 @@ class BelanjaHeaderController extends Controller
         $kros = \App\Models\Kro::all();
         $ros = \App\Models\Ro::all();
         $komponens = \App\Models\Komponen::all();
-        // dd($belanjaHeaders);
         return view('belanja-redesain.index', compact('belanjaHeaders', 'programs', 'kros', 'ros', 'komponens'));
     }
 
@@ -159,6 +158,35 @@ class BelanjaHeaderController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Komponen berhasil dipilih',
+                'data' => $belanjaHeader
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Store Subkomponen for belanja header via AJAX.
+     */
+    public function storeSubkomponen(Request $request, BelanjaHeader $belanjaHeader)
+    {
+        $validated = $request->validate([
+            'nama_subkomponen' => 'required|string|max:255',
+            'kode_subkomponen' => 'required|string|max:100',
+        ]);
+
+        try {
+            $belanjaHeader->update([
+                'nama_subkomponen' => $validated['nama_subkomponen'],
+                'kode_subkomponen' => $validated['kode_subkomponen'],
+            ]);
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Subkomponen berhasil disimpan',
                 'data' => $belanjaHeader
             ]);
         } catch (\Exception $e) {

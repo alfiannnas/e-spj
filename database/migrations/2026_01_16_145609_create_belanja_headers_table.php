@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('ro_id')->nullable();
             $table->bigInteger('komponen_id')->nullable();
             $table->string('nama_uraian');
+            $table->string('kode_subkomponen')->nullable();
             $table->string('nama_subkomponen')->nullable();
             $table->string('satuan')->nullable();
             $table->decimal('harga', 15, 2)->nullable();

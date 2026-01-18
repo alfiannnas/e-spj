@@ -124,9 +124,19 @@
                                     </tr>
                                     @endif
                                     @if($item->komponens)
-                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-50 cursor-pointer" onclick="openKomponenModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
+                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-50 cursor-pointer" onclick="openSubkomponenModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
                                         <td class="border border-gray-300 px-4 py-3 font-medium pl-12">{{ $item->komponens->kode_komponen}}</td>
                                         <td class="border border-gray-300 px-4 py-3">{{ optional($item->komponens)->nama_komponen ?? '-' }}</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-center">-</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-right font-semibold">-</td>
+                                    </tr>
+                                    @endif
+                                    @if($item->nama_subkomponen)
+                                    <tr class="hover:bg-gray-50 border-b border-gray-200 bg-gray-50 cursor-pointer" onclick="openSubkomponenModal({{ $item->id }}, '{{ optional($item->programs)->kode_kegiatan ?? '-' }}')">
+                                        <td class="border border-gray-300 px-4 py-3 font-medium pl-12">{{ $item->kode_subkomponen }}</td>
+                                        <td class="border border-gray-300 px-4 py-3">{{ $item->nama_subkomponen }}</td>
                                         <td class="border border-gray-300 px-4 py-3 text-center">-</td>
                                         <td class="border border-gray-300 px-4 py-3 text-center">-</td>
                                         <td class="border border-gray-300 px-4 py-3 text-center">-</td>
@@ -252,6 +262,44 @@
                 </div>
 
                 <div id="kroMessage" style="display: none;" class="mt-4 p-3 rounded-lg text-sm"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Input Subkomponen -->
+    <div id="subkomponenModal" style="display: none;" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4" style="max-height: 90vh; overflow-y: auto;">
+            <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
+                <h3 class="text-lg font-semibold">Input Nama Subkomponen</h3>
+                <button onclick="closeSubkomponenModal()" class="text-white hover:bg-blue-700 p-1 rounded">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="subkomponenForm" method="POST" onsubmit="submitSubkomponen(event)" class="p-6">
+                @csrf
+                <input type="hidden" id="belanja_id_subkomponen" name="belanja_id_subkomponen">
+                <div class="mb-6">
+                    <label for="kode_subkomponen" class="block text-sm font-medium text-gray-700 mb-2">Kode Subkomponen <span class="text-red-600">*</span></label>
+                    <input type="text" id="kode_subkomponen" name="kode_subkomponen" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan kode subkomponen" />
+                </div>
+                <div class="mb-6">
+                    <label for="nama_subkomponen" class="block text-sm font-medium text-gray-700 mb-2">Nama Subkomponen <span class="text-red-600">*</span></label>
+                    <input type="text" id="nama_subkomponen" name="nama_subkomponen" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan nama subkomponen" />
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeSubkomponenModal()" class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition font-medium">
+                        Batal
+                    </button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        Simpan
+                    </button>
+                </div>
+
+                <div id="subkomponenMessage" style="display: none;" class="mt-4 p-3 rounded-lg text-sm"></div>
             </form>
         </div>
     </div>
@@ -495,6 +543,63 @@
                     messageDiv.style.display = 'block';
                     messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
                     messageDiv.textContent = '✗ ' + (data.message || 'Gagal memilih KRO');
+                }
+            })
+            .catch(error => {
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
+                messageDiv.textContent = '✗ Error: ' + error.message;
+            });
+        }
+
+        function openSubkomponenModal(belanjaId, kodeKegiatan) {
+            document.getElementById('belanja_id_subkomponen').value = belanjaId;
+            const modal = document.getElementById('subkomponenModal');
+            modal.style.display = 'flex';
+        }
+
+        function closeSubkomponenModal() {
+            const modal = document.getElementById('subkomponenModal');
+            modal.style.display = 'none';
+            document.getElementById('subkomponenForm').reset();
+            document.getElementById('subkomponenMessage').style.display = 'none';
+        }
+
+        function submitSubkomponen(event) {
+            event.preventDefault();
+
+            const belanjaId = document.getElementById('belanja_id_subkomponen').value;
+            const namaSubkomponen = document.getElementById('nama_subkomponen').value;
+            const kodeSubkomponen = document.getElementById('kode_subkomponen').value;
+            const messageDiv = document.getElementById('subkomponenMessage');
+
+            // Submit via AJAX
+            fetch('/belanja-redesain/' + belanjaId + '/store-subkomponen', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({
+                    nama_subkomponen: namaSubkomponen,
+                    kode_subkomponen: kodeSubkomponen
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-green-100 text-green-700';
+                    messageDiv.textContent = '✓ Subkomponen berhasil disimpan!';
+                    
+                    setTimeout(() => {
+                        closeSubkomponenModal();
+                        location.reload();
+                    }, 1500);
+                } else {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'mt-4 p-3 rounded-lg text-sm bg-red-100 text-red-700';
+                    messageDiv.textContent = '✗ ' + (data.message || 'Gagal menyimpan Subkomponen');
                 }
             })
             .catch(error => {

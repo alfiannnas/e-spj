@@ -12,6 +12,7 @@ class BelanjaHeader extends Model
         'ro_id',
         'komponen_id',
         'nama_uraian',
+        'kode_subkomponen',
         'nama_subkomponen',
         'satuan',
         'harga',
