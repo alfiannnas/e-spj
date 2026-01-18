@@ -10,7 +10,9 @@ class BelanjaHeader extends Model
         'program_id',
         'kro_id',
         'ro_id',
+        'komponen_id',
         'nama_uraian',
+        'nama_subkomponen',
         'satuan',
         'harga',
         'jumlah',
@@ -29,5 +31,10 @@ class BelanjaHeader extends Model
     public function ros()
     {
         return $this->belongsTo(Ro::class, 'ro_id');
+    }
+
+    public function komponens()
+    {
+        return $this->belongsTo(Komponen::class, 'komponen_id');
     }
 }
