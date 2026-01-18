@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('belanja_redesains', function (Blueprint $table) {
+        Schema::create('belanja_headers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('program_id')->nullable();
             $table->bigInteger('kro_id')->nullable();
             $table->bigInteger('ro_id')->nullable();
+            $table->bigInteger('komponen_id')->nullable();
             $table->string('nama_uraian');
+            $table->string('nama_subkomponen')->nullable();
             $table->string('satuan')->nullable();
             $table->decimal('harga', 15, 2)->nullable();
             $table->integer('jumlah')->nullable();
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('belanja_redesains');
+        Schema::dropIfExists('belanja_headers');
     }
 };
