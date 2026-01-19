@@ -42,9 +42,9 @@ class RegenerateBelanjaRedesain extends Command
             foreach ($rows as $row) {
 
                 $kode = trim($row['A'] ?? '');
-                $nama = trim($row['D'] ?? '');
+                $nama_uraian = trim($row['D'] ?? '');
 
-                if ($kode === '' || $nama === '') {
+                if ($kode === '' || $nama_uraian === '') {
                     continue;
                 }
 
@@ -56,6 +56,7 @@ class RegenerateBelanjaRedesain extends Command
                 if ($level === 'program') {
                     $program = Program::where('kode_kegiatan', $kode)->firstOrFail();
                     $current['program_id'] = $program->id;
+                    $current['nama_uraian'] = $nama_uraian;
                 }
                 
 
@@ -99,15 +100,15 @@ class RegenerateBelanjaRedesain extends Command
                         'program_id' => $current['program_id'],
                         'kro_id' => $current['kro_id'],
                         'ro_id' => $current['ro_id'],
-                        'nama_uraian' => $nama,
+                        'nama_uraian' => $current['nama_uraian'],
                         'komponen_id' => $current['komponen_id'],
                         'kode_subkomponen' => $kode,
-                        'nama_subkomponen' => $nama,
+                        'nama_subkomponen' => $nama_uraian,
                     ]);
                 }
                 
 
-                $this->info("Imported: {$kode} - {$nama}");
+                $this->info("Imported: {$kode} - {$current['nama_uraian']}");
             }
 
             DB::commit();
