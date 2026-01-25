@@ -132,7 +132,14 @@ class RegenerateBelanjaRedesain extends Command
                  * AKUN → track akun_id untuk item di bawahnya
                  */
                 elseif ($level === 'akun') {
-                    $akun = Akun::where('kode_akun', $kode)->firstOrFail();
+                    $akun = Akun::where('kode_akun', $kode)->first();
+
+                    if (!$akun) {
+                        $akun = Akun::create([
+                            'kode_akun' => $kode,
+                            'nama_akun' => $nama_uraian
+                        ]);
+                    }
                     $currentAkunId = $akun->id;
                     $this->info("Akun: {$kode} - {$nama_uraian}");
                 }
