@@ -38,4 +38,9 @@ class BelanjaHeader extends Model
     {
         return $this->belongsTo(Komponen::class, 'komponen_id');
     }
+
+    public function items()
+    {
+        return $this->hasMany(BelanjaItem::class);
+    }
 }
