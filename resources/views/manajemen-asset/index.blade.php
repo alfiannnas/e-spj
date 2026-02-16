@@ -38,17 +38,7 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Top Bar -->
-            <div class="bg-white shadow-sm border-b border-gray-200 px-8 py-4">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-2xl font-bold text-gray-900">Manajemen Asset</h2>
-                    <div class="flex items-center gap-4">
-                        <span class="text-sm text-gray-600">{{ auth()->user()->email ?? 'User' }}</span>
-                        <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span class="text-white font-bold">{{ substr(auth()->user()->email ?? 'U', 0, 1) }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('layouts')
 
             <!-- Page Content -->
             <div class="flex-1 overflow-auto">
@@ -64,7 +54,7 @@
                     <!-- Header with Create Button -->
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold text-gray-900">Daftar Asset</h3>
-                        <a href="{{ route('akun.create') }}"
+                        <a href="{{ route('manajemen-asset.create') }}"
                             class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center gap-2">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"

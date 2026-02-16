@@ -22,7 +22,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 
 // Dashboard Routes
 Route::resource('dashboard', DashboardController::class);
-Route::resource('manajemen-aset', AssetController::class);
+Route::resource('manajemen-asset', AssetController::class);
 
 // Belanja Redesain Routes
 Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');

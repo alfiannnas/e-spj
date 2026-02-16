@@ -13,8 +13,9 @@ class AssetController extends Controller
     public function index()
     {
         $assets = Asset::orderBy('created_at', 'desc')->paginate(15);
+        $title = 'Manajemen Asset';
 
-        return view('manajemen-asset.index', compact('assets'));
+        return view('manajemen-asset.index', compact('assets', 'title'));
     }
 
 
@@ -23,7 +24,8 @@ class AssetController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Manajemen Asset';
+        return view('manajemen-asset.create', compact('title'));
     }
 
     /**
@@ -31,7 +33,8 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Asset::create($request->all());
+        return redirect()->route('manajemen-asset.index')->with('success', 'Asset berhasil ditambahkan');
     }
 
     /**
