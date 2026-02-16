@@ -68,17 +68,24 @@
                                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Kode Asset</label>
-                                                        <input type="text" name="kode" value="{{ old('kode') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                        <input
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('kode') border-red-500 @enderror"
+                                                            id="kode"
+                                                            type="text"
+                                                            name="kode"
+                                                            value="{{ old('kode') }}"
+                                                            placeholder="Masukkan kode Asset"
+                                                            required />
                                                         @error('kode')
-                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
                                                         @enderror
                                                     </div>
 
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Asset</label>
                                                         <input type="text" name="nama" value="{{ old('nama') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('nama') border-red-500 @enderror"
+                                                            placeholder="Masukkan nama Asset">
                                                         @error('nama')
                                                         <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                                         @enderror
@@ -87,57 +94,85 @@
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">NUP</label>
                                                         <input type="text" name="nup" value="{{ old('nup') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('nup') border-red-500 @enderror"
+                                                            placeholder="Masukkan NUP">
+                                                        @error('nup')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Perolehan</label>
                                                         <input type="date" name="tgl_perolehan" value="{{ old('tgl_perolehan') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('tgl_perolehan') border-red-500 @enderror"
+                                                            placeholder="Masukkan tanggal perolehan">
+                                                        @error('tgl_perolehan')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Jumlah</label>
                                                         <input type="number" name="jumlah" value="{{ old('jumlah', 1) }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('jumlah') border-red-500 @enderror"
+                                                            placeholder="Masukkan jumlah" min="1">
+                                                        @error('jumlah')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Satuan</label>
                                                         <input type="text" name="satuan" value="{{ old('satuan') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('satuan') border-red-500 @enderror"
+                                                            placeholder="Masukkan satuan (mis: unit, buah, set)">
+                                                        @error('satuan')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="md:col-span-2">
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Merk / Tipe</label>
                                                         <input type="text" name="merk_tipe" value="{{ old('merk_tipe') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('merk_tipe') border-red-500 @enderror"
+                                                            placeholder="Masukkan merk / tipe">
+                                                        @error('merk_tipe')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Kondisi</label>
                                                         <select name="kondisi"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('kondisi') border-red-500 @enderror">
                                                             <option value="">-- Pilih Kondisi --</option>
                                                             <option value="Baik" {{ old('kondisi') == 'Baik' ? 'selected' : '' }}>Baik</option>
                                                             <option value="Rusak Ringan" {{ old('kondisi') == 'Rusak Ringan' ? 'selected' : '' }}>Rusak Ringan</option>
                                                             <option value="Rusak Berat" {{ old('kondisi') == 'Rusak Berat' ? 'selected' : '' }}>Rusak Berat</option>
                                                         </select>
+                                                        @error('kondisi')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div>
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
                                                         <select name="status"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('status') border-red-500 @enderror">
+                                                            <option value="">-- Pilih Status --</option>
                                                             <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                                                             <option value="Tidak Aktif" {{ old('status') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                                                         </select>
+                                                        @error('status')
+                                                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="md:col-span-2">
                                                         <label class="block text-sm font-semibold text-gray-700 mb-2">Penanggung Jawab</label>
                                                         <input type="text" name="penanggung_jawab" value="{{ old('penanggung_jawab') }}"
-                                                            class="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2     focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white">
+                                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('penanggung_jawab') border-red-500 @enderror"
+                                                            placeholder="Masukkan nama penanggung jawab">
                                                     </div>
                                                 </div>
 
