@@ -76,6 +76,11 @@ class AssetController extends Controller
      */
     public function destroy(Asset $asset)
     {
-        //
+        dd($asset->id);
+        $asset = Asset::find($asset->id);
+        dd($asset);
+        $asset->delete();
+
+        return redirect()->route('manajemen-asset.index')->with('success', 'Asset berhasil dihapus');
     }
 }
