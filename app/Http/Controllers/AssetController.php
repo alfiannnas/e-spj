@@ -33,7 +33,17 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        Asset::create($request->all());
+        $validated = $request->validate([
+            'kode' => 'nullable|unique:assets,kode',
+        ]);
+
+        $data = $request->all();
+        if (array_key_exists('kode', $validated)) {
+            $data['kode'] = $validated['kode'];
+        }
+
+        Asset::create($data);
+
         return redirect()->route('manajemen-asset.index')->with('success', 'Asset berhasil ditambahkan');
     }
 
