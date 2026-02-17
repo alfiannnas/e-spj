@@ -100,9 +100,9 @@ class AssetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Asset $asset)
+    public function destroy(Asset $manajemen_asset)
     {
-        $asset->delete();
+        $manajemen_asset->delete();
 
         return redirect()->route('manajemen-asset.index')->with('success', 'Asset berhasil dihapus');
     }
