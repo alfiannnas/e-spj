@@ -163,7 +163,7 @@
                                                 </a>
 
                                                 <!-- Delete -->
-                                                <form action="" method="POST"
+                                                <form action="{{ route('manajemen-asset.destroy', $asset->id) }}" method="POST"
                                                     onsubmit="return confirm('Yakin hapus data ini?')">
                                                     @csrf
                                                     @method('DELETE')
