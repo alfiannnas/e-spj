@@ -35,12 +35,18 @@ class AssetController extends Controller
     {
         $validated = $request->validate([
             'kode' => 'nullable|unique:assets,kode',
+            'nama' => 'required|string|max:255',
+            'nup' => 'nullable|string|max:100',
+            'tgl_perolehan' => 'nullable|date',
+            'jumlah' => 'nullable|integer|min:1',
+            'satuan' => 'nullable|string|max:50',
+            'merk_tipe' => 'nullable|string|max:255',
+            'kondisi' => 'nullable|in:Baik,Rusak Ringan,Rusak Berat',
+            'status' => 'nullable|in:Aktif,Tidak Aktif',
+            'penanggung_jawab' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->all();
-        if (array_key_exists('kode', $validated)) {
-            $data['kode'] = $validated['kode'];
-        }
+        $data = $request->only(array_keys($validated));
 
         Asset::create($data);
 
@@ -58,25 +64,44 @@ class AssetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Asset $asset)
+    public function edit(Asset $manajemen_asset)
     {
-        //
+        $title = 'Manajemen Asset';
+        return view('manajemen-asset.edit', compact('manajemen_asset', 'title'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Asset $asset)
+    public function update(Request $request, Asset $manajemen_asset)
     {
-        //
+        $validated = $request->validate([
+            'kode' => 'nullable|unique:assets,kode,' . $manajemen_asset->id,
+            'nama' => 'required|string|max:255',
+            'nup' => 'nullable|string|max:100',
+            'tgl_perolehan' => 'nullable|date',
+            'jumlah' => 'nullable|integer|min:1',
+            'satuan' => 'nullable|string|max:50',
+            'merk_tipe' => 'nullable|string|max:255',
+            'kondisi' => 'nullable|in:Baik,Rusak Ringan,Rusak Berat',
+            'status' => 'nullable|in:Aktif,Tidak Aktif',
+            'penanggung_jawab' => 'nullable|string|max:255',
+        ]);
+
+        $manajemen_asset->update($validated);
+
+        return redirect()
+            ->route('manajemen-asset.index')
+            ->with('success', 'Asset berhasil diperbarui');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Asset $asset)
     {
-        $asset = Asset::find($id);
         $asset->delete();
 
         return redirect()->route('manajemen-asset.index')->with('success', 'Asset berhasil dihapus');

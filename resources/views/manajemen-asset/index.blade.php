@@ -146,7 +146,7 @@
                                         <td class="px-4 py-3 text-center">
                                             <div class="flex justify-center items-center gap-4">
                                                 <!-- Edit -->
-                                                <a href=""
+                                                <a href="{{ route('manajemen-asset.edit', ['manajemen_asset' => $asset->id]) }}"
                                                     class="text-gray-500 hover:text-blue-600 transition"
                                                     title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@
                                                 </a>
 
                                                 <!-- Delete -->
-                                                <form action="{{ route('manajemen-asset.destroy', $asset->id) }}" method="POST"
+                                                <form action="{{ route('manajemen-asset.destroy', ['manajemen_asset' => $asset->id]) }}" method="POST"
                                                     onsubmit="return confirm('Yakin hapus data ini?')">
                                                     @csrf
                                                     @method('DELETE')
