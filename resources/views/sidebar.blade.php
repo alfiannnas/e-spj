@@ -22,6 +22,14 @@
                     <span class="font-medium">Manajemen Asset</span>
                 </a>
 
+                <!-- Manajemen Kontrak Menu -->
+                <a href="{{ route('contract.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-200 sidebar-active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24">
+                        <path fill="currentColor" d="M2.226 2h20v9h-20zm6.002 3.5H6.224v2.004h2.004zM2.226 13h20v9h-20zm6.002 3.5H6.224v2.004h2.004z" />
+                    </svg>
+                    <span class="font-medium">Manajemen Kontrak </span>
+                </a>
+
                 <!-- Setting Menu with Dropdown -->
                 <div class="mt-2">
                     <button class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-200" onclick="toggleDropdown()">
