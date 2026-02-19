@@ -78,7 +78,7 @@
                                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600 uppercase">Nama Paket Pengadaan</th>
                                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600 uppercase">Sumber Dana</th>
                                         <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600 uppercase">Waktu Pelaksanaan</th>
-                                        <th class="px-4 py-3 text-right text-sm font-semibold text-gray-600 uppercase">Nilai Kontrak</th>
+                                        <th class="px-8 py-3 text-right text-sm font-semibold text-gray-600 uppercase">Nilai Kontrak</th>
                                         <th class="px-4 py-3 text-center text-sm font-semibold text-gray-600 uppercase">Aksi</th>
                                     </tr>
                                 </thead>

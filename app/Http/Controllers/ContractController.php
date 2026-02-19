@@ -22,7 +22,8 @@ class ContractController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Manajemen Kontrak';
+        return view('contract.create', compact('title'));
     }
 
     /**
@@ -30,7 +31,20 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'satuan_kerja' => 'required|string|max:255',
+            'tanggal_sp' => 'required|date',
+            'nama_pejabat_penandatangan' => 'required|string|max:255',
+            'nama_penyedia' => 'required|string|max:255',
+            'nama_paket_pengadaan' => 'required|string|max:255',
+            'sumber_dana' => 'required|string|max:255',
+            'waktu_pelaksanaan' => 'required|date',
+            'nilai_kontrak' => 'required|integer|min:0',
+        ]);
+
+        Contract::create($validated);
+
+        return redirect()->route('contract.index')->with('success', 'Kontrak berhasil ditambahkan');
     }
 
     /**
@@ -46,7 +60,8 @@ class ContractController extends Controller
      */
     public function edit(Contract $contract)
     {
-        //
+        $title = 'Manajemen Kontrak';
+        return view('contract.edit', compact('contract', 'title'));
     }
 
     /**
@@ -54,7 +69,20 @@ class ContractController extends Controller
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+        $validated = $request->validate([
+            'satuan_kerja' => 'required|string|max:255',
+            'tanggal_sp' => 'required|date',
+            'nama_pejabat_penandatangan' => 'required|string|max:255',
+            'nama_penyedia' => 'required|string|max:255',
+            'nama_paket_pengadaan' => 'required|string|max:255',
+            'sumber_dana' => 'required|string|max:255',
+            'waktu_pelaksanaan' => 'required|date',
+            'nilai_kontrak' => 'required|integer|min:0',
+        ]);
+
+        $contract->update($validated);
+
+        return redirect()->route('contract.index')->with('success', 'Kontrak berhasil diperbarui');
     }
 
     /**
@@ -62,6 +90,8 @@ class ContractController extends Controller
      */
     public function destroy(Contract $contract)
     {
-        //
+        $contract->delete();
+
+        return redirect()->route('contract.index')->with('success', 'Kontrak berhasil dihapus');
     }
 }
