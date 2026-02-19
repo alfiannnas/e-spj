@@ -11,6 +11,8 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\BelanjaHeaderController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\MeetingRoomBookingController;
+
 // Login Routes
 Route::get('/', function () {
     return redirect('login');
@@ -24,6 +26,7 @@ Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::resource('dashboard', DashboardController::class);
 Route::resource('manajemen-asset', AssetController::class);
 Route::resource('contract', ContractController::class);
+Route::resource('meeting-room-booking', MeetingRoomBookingController::class);
 
 // Belanja Redesain Routes
 Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');
