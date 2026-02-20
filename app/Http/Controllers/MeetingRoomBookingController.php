@@ -56,7 +56,8 @@ class MeetingRoomBookingController extends Controller
      */
     public function edit(MeetingRoomBooking $meetingRoomBooking)
     {
-        //
+        $title = 'Peminjaman Ruang Rapat';
+        return view('meeting-room-booking.edit', compact('meetingRoomBooking', 'title'));
     }
 
     /**
@@ -64,7 +65,16 @@ class MeetingRoomBookingController extends Controller
      */
     public function update(Request $request, MeetingRoomBooking $meetingRoomBooking)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'nullable|integer|min:1',
+            'booking_date' => 'nullable|date',
+            'booking_time' => 'nullable',
+            'booking_purpose' => 'nullable|string|max:255',
+        ]);
+
+        $meetingRoomBooking->update($validated);
+
+        return redirect()->route('meeting-room-booking.index')->with('success', 'Peminjaman ruang rapat berhasil diperbarui');
     }
 
     /**
