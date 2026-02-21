@@ -133,19 +133,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
-                                                <select name="status"
-                                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('status') border-red-500 @enderror">
-                                                    <option value="">-- Pilih Status --</option>
-                                                    <option value="Menunggu" {{ old('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                                    <option value="Selesai" {{ old('status') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                                                    <option value="Ditolak" {{ old('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
-                                                </select>
-                                                @error('status')
-                                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
+                                            <input type="hidden" name="status" value="Menunggu">
 
                                             <div class="col-span-2">
                                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan</label>
