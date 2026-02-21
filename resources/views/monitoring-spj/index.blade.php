@@ -107,7 +107,7 @@
                                             {{ $item->mak_number ?? '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-gray-700">
-                                            {{ Str::limit($item->activity_name ?? '-', 30) }}
+                                            {{ $item->activity_name ?? '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-gray-700 whitespace-nowrap">
                                             {{ $item->rab !== null ? 'Rp. ' . number_format($item->rab, 0, ',', '.') : '-' }}
