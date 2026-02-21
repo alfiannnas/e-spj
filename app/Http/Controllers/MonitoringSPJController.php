@@ -79,6 +79,7 @@ class MonitoringSPJController extends Controller
             'tu_approved_at' => 'nullable|date',
             'ppk_approved_at' => 'nullable|date',
             'finance_approved_at' => 'nullable|date',
+            'status' => 'nullable|string|max:255',
         ]);
 
         $monitoring_spj->update($validated);

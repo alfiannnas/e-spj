@@ -111,6 +111,20 @@
                                                 <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
                                                 @enderror
                                             </div>
+
+                                            <div class="col-span-2">
+                                                <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
+                                                <select name="status"
+                                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('status') border-red-500 @enderror">
+                                                    <option value="">-- Pilih Status --</option>
+                                                    <option value="Menunggu" {{ old('status', $monitoring_spj->status) == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                                    <option value="Selesai" {{ old('status', $monitoring_spj->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                                    <option value="Ditolak" {{ old('status', $monitoring_spj->status) == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                                </select>
+                                                @error('status')
+                                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                                                @enderror
+                                            </div>
                                         </div>
 
                                         <div class="flex justify-end gap-4 pt-6 border-t border-gray-100">
