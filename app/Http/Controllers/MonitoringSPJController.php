@@ -90,17 +90,32 @@ class MonitoringSPJController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(MonitoringSPJ $monitoringSPJ)
+    public function edit(MonitoringSPJ $monitoring_spj)
     {
-        //
+        $title = 'Edit Monitoring SPJ';
+        return view('monitoring-spj.edit', compact('monitoring_spj', 'title'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MonitoringSPJ $monitoringSPJ)
+    public function update(Request $request, MonitoringSPJ $monitoring_spj)
     {
-        //
+        $validated = $request->validate([
+            'submitted_at' => 'nullable|date',
+            'activity_date' => 'nullable|date',
+            'division' => 'nullable|string|max:255',
+            'mak_number' => 'nullable|string|max:255',
+            'activity_name' => 'nullable|string|max:255',
+            'rab' => 'nullable|integer|min:0',
+            'realization' => 'nullable|integer|min:0',
+            'status' => 'nullable|string|max:255',
+            'notes' => 'nullable|string',
+        ]);
+
+        $monitoring_spj->update($validated);
+
+        return redirect()->route('monitoring-spj.index')->with('success', 'Data monitoring SPJ berhasil diperbarui');
     }
 
     /**
