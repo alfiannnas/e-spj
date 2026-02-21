@@ -12,6 +12,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\BelanjaHeaderController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\MeetingRoomBookingController;
+use App\Http\Controllers\MonitoringSPJController;
 
 // Login Routes
 Route::get('/', function () {
@@ -27,6 +28,7 @@ Route::resource('dashboard', DashboardController::class);
 Route::resource('manajemen-asset', AssetController::class);
 Route::resource('contract', ContractController::class);
 Route::resource('meeting-room-booking', MeetingRoomBookingController::class);
+Route::resource('monitoring-spj', MonitoringSPJController::class);
 
 // Belanja Redesain Routes
 Route::post('belanja-redesain/storeProgram', [BelanjaHeaderController::class, 'storeProgram'])->name('belanja-redesain.storeProgram');
