@@ -134,42 +134,6 @@
                                             </div>
 
                                             <div>
-                                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tgl Approval Pelaksana</label>
-                                                <input type="date" name="pelaksana_approved_at" value="{{ old('pelaksana_approved_at') }}"
-                                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('pelaksana_approved_at') border-red-500 @enderror">
-                                                @error('pelaksana_approved_at')
-                                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tgl Approval TU</label>
-                                                <input type="date" name="tu_approved_at" value="{{ old('tu_approved_at') }}"
-                                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('tu_approved_at') border-red-500 @enderror">
-                                                @error('tu_approved_at')
-                                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tgl Approval PPK</label>
-                                                <input type="date" name="ppk_approved_at" value="{{ old('ppk_approved_at') }}"
-                                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('ppk_approved_at') border-red-500 @enderror">
-                                                @error('ppk_approved_at')
-                                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div>
-                                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tgl Approval Keuangan</label>
-                                                <input type="date" name="finance_approved_at" value="{{ old('finance_approved_at') }}"
-                                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('finance_approved_at') border-red-500 @enderror">
-                                                @error('finance_approved_at')
-                                                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div>
                                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
                                                 <select name="status"
                                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('status') border-red-500 @enderror">

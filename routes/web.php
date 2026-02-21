@@ -28,6 +28,8 @@ Route::resource('dashboard', DashboardController::class);
 Route::resource('manajemen-asset', AssetController::class);
 Route::resource('contract', ContractController::class);
 Route::resource('meeting-room-booking', MeetingRoomBookingController::class);
+Route::get('monitoring-spj/{monitoring_spj}/approval', [MonitoringSPJController::class, 'approval'])->name('monitoring-spj.approval');
+Route::put('monitoring-spj/{monitoring_spj}/approval', [MonitoringSPJController::class, 'approvalUpdate'])->name('monitoring-spj.approval.update');
 Route::resource('monitoring-spj', MonitoringSPJController::class);
 
 // Belanja Redesain Routes

@@ -61,6 +61,32 @@ class MonitoringSPJController extends Controller
     }
 
     /**
+     * Show the form for editing approval dates only.
+     */
+    public function approval(MonitoringSPJ $monitoring_spj)
+    {
+        $title = 'Edit Approval - Monitoring SPJ';
+        return view('monitoring-spj.approval', compact('monitoring_spj', 'title'));
+    }
+
+    /**
+     * Update approval dates.
+     */
+    public function approvalUpdate(Request $request, MonitoringSPJ $monitoring_spj)
+    {
+        $validated = $request->validate([
+            'pelaksana_approved_at' => 'nullable|date',
+            'tu_approved_at' => 'nullable|date',
+            'ppk_approved_at' => 'nullable|date',
+            'finance_approved_at' => 'nullable|date',
+        ]);
+
+        $monitoring_spj->update($validated);
+
+        return redirect()->route('monitoring-spj.index')->with('success', 'Data approval berhasil diperbarui');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(MonitoringSPJ $monitoringSPJ)
